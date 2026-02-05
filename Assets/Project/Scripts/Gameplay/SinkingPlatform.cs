@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class SinkingPlatform : MonoBehaviour
 {
-    [SerializeField] private float _springStrength = 80f;
-    [SerializeField] private float _damping = 10f;
-    [SerializeField] private float _playerWeightForce = 12f;
+    [SerializeField] private float _springStrength = 40f;
+    [SerializeField] private float _damping = 6f;
+    [SerializeField] private float _playerWeightForce = 10f;
     [SerializeField] private float _maxSinkDepth = 0.6f;
 
-    [SerializeField] private float _sinkDelay = 10f;
-    [SerializeField] private float _finalSinkSpeed = 1.5f;
+    [SerializeField] private float _sinkDelay = 3f;
+    [SerializeField] private float _finalSinkSpeed = 1f;
     [SerializeField] private float destroyY = -10f;
     
     
@@ -41,14 +41,14 @@ public class SinkingPlatform : MonoBehaviour
         {
             _rb.AddForce(Vector3.down * _playerWeightForce, ForceMode.Force);
         }
-        
-        float minY = _restY - _maxSinkDepth;
-        if (_rb.position.y < minY)
-        {
+        if(!_sinkingForever){
+         float minY = _restY - _maxSinkDepth;
+         if (_rb.position.y < minY)
+         {
             _rb.position = new Vector3(_rb.position.x, minY, _rb.position.z);
             _rb.linearVelocity = new Vector3(_rb.linearVelocity.x, 0, _rb.linearVelocity.z);
+         }
         }
-
         if (_sinkingForever)
         {
             _rb.AddForce(Vector3.down * _finalSinkSpeed, ForceMode.VelocityChange);
