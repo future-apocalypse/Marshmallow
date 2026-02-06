@@ -16,13 +16,13 @@ public class Spawner : MonoBehaviour
         
     }
 
-    void StartSpawning()
+    private void StartSpawning()
     {
         if (_spawnRoutine == null)
             _spawnRoutine = StartCoroutine(SpawnLoop());
     }
 
-    void StopSpawning()
+    private void StopSpawning()
     {
         if (_spawnRoutine != null)
             StopCoroutine(_spawnRoutine); 
@@ -52,8 +52,4 @@ public class Spawner : MonoBehaviour
         );
     }
     
-    void Update()
-    {
-        
-    }
 }

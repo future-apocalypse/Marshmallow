@@ -43,13 +43,12 @@ public class PlayerMovement : MonoBehaviour
         if (context.started)
         {
             _jumpRequest = true;
-            Debug.Log("Jump");
         }
     }
 
     private bool IsGrounded()
     {
         return Physics.Raycast(transform.position, Vector3.down, _groundDistance, whatIsGround);
-        Debug.DrawRay(transform.position, Vector3.down * _groundDistance, Color.red);
+        
     }
 }

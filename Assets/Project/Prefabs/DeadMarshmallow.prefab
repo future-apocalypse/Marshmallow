@@ -30,8 +30,8 @@ Transform:
   m_GameObject: {fileID: 4701020529210645897}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.6212, y: 0.14171, z: 1.44356}
-  m_LocalScale: {x: 1, y: 0.5, z: 0.5}
+  m_LocalPosition: {x: -0.8300153, y: -1.53829, z: -1.8066818}
+  m_LocalScale: {x: 0.50766706, y: 0.50766706, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -156,7 +156,7 @@ MonoBehaviour:
   _springStrength: 40
   _damping: 6
   _playerWeightForce: 10
-  _maxSinkDepth: 0.6
+  _maxSinkDepth: 0.4
   _sinkDelay: 3
   _finalSinkSpeed: 1
-  destroyY: -10
+  _destroyY: -10
