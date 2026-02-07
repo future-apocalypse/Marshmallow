@@ -10,6 +10,13 @@ public class Spawner : MonoBehaviour
  
  private Coroutine _spawnRoutine;
  
+ public static Spawner Instance;
+
+ private void Awake()
+ {
+     Instance = this;
+ }
+ 
     void Start()
     {
         StartSpawning();
@@ -50,6 +57,18 @@ public class Spawner : MonoBehaviour
         return new Vector3(
             Random.Range(bounds.min.x, bounds.max.x),bounds.max.y,Random.Range(bounds.min.z, bounds.max.z)
         );
+    }
+
+    public void SetSpawnInterval(float value)
+    {
+        _spawnInterval = value;
+        
+        StopSpawning();
+        StartSpawning();
+    }
+    public float GetSpawnInterval()
+    {
+        return _spawnInterval;
     }
     
 }

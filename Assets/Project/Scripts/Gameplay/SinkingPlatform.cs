@@ -84,6 +84,7 @@ public class SinkingPlatform : MonoBehaviour
         {
             _playerOnPlatform = true;
             _timerActive = true;
+            GameManager.Instance.RegisterJump();
         }
     }
 
