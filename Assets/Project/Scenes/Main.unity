@@ -11565,6 +11565,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7621e529ee3a643b1a860c86f9be4737, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlatformManager
+  currentSinkTime: 5
 --- !u!114 &1208231664
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11577,6 +11578,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c98bc4a272f64a1496cc2757fc8efb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  jumpCount: 0
+  survivalTime: 0
+  baseSinkTime: 5
+  baseSpawnInterval: 3
+  maxDifficultyTier: 5
 --- !u!4 &1208231665
 Transform:
   m_ObjectHideFlags: 0
@@ -11865,6 +11871,12 @@ MonoBehaviour:
   _deadMarshmallowPrefab: {fileID: 4701020529210645897, guid: 742430b93f1db4dc681190c67945fc69, type: 3}
   _spawnInterval: 3
   cupBounds: {fileID: 2111954374}
+  _minHorizontalDistance: 1
+  _maxHorizontalDistance: 4
+  _horizontalPadding: 0.8
+  _maxActivePlatforms: 5
+  _platformWidth: 5
+  _platformDepth: 10
 --- !u!4 &1429240244
 Transform:
   m_ObjectHideFlags: 0

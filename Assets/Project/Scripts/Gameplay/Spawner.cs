@@ -6,6 +6,14 @@ public class Spawner : MonoBehaviour
  [SerializeField] private GameObject _deadMarshmallowPrefab;
  [SerializeField] private float _spawnInterval = 3f;
  [SerializeField] private BoxCollider cupBounds;
+
+ [SerializeField] private float _minHorizontalDistance = 2f;
+ [SerializeField] private float _maxHorizontalDistance = 5f;
+ [SerializeField] private float _horizontalPadding = 1f;
+ [SerializeField] private int _maxActivePlatforms = 4;
+ 
+ private Vector3 _lastSpawnPosition;
+ private bool _hasLastSpawnPosition;
  
  
  private Coroutine _spawnRoutine;
@@ -44,20 +52,62 @@ public class Spawner : MonoBehaviour
             yield return new WaitForSeconds(_spawnInterval);
         }
     }
-    
-    private void SpawnMarshmallow()
-    {
-        Vector3 spawnPosition = GetRandomPointInBounds(cupBounds.bounds);
-     Quaternion randomRotation = Quaternion.Euler(0f, Random.Range(0f, 360f), 0f);
-        Instantiate(_deadMarshmallowPrefab, spawnPosition, randomRotation);
-    }
 
-    private Vector3 GetRandomPointInBounds(Bounds bounds)
+    private Vector3 GetRandomPosition()
     {
+        Bounds bounds = cupBounds.bounds;
+        
+        float minX = bounds.min.x + _horizontalPadding;
+        float maxX = bounds.max.x - _horizontalPadding;
+
+        float minZ = bounds.min.z + _horizontalPadding;
+        float maxZ = bounds.max.z - _horizontalPadding;
+
         return new Vector3(
-            Random.Range(bounds.min.x, bounds.max.x),bounds.max.y,Random.Range(bounds.min.z, bounds.max.z)
+            Random.Range(minX, maxX),
+            bounds.max.y,
+            Random.Range(minZ, maxZ)
         );
     }
+    
+    private Vector3 GetValidSpawnPosition()
+    {
+        Vector3 candidate;
+        int attempts = 0;
+
+        do
+        {
+            candidate = GetRandomPosition();
+            attempts++;
+
+            if (!_hasLastSpawnPosition)
+                break;
+
+            float distance = Vector3.Distance(
+                new Vector3(candidate.x, 0f, candidate.z),
+                new Vector3(_lastSpawnPosition.x, 0f, _lastSpawnPosition.z)
+            );
+
+            if (distance >= _minHorizontalDistance && distance <= _maxHorizontalDistance)
+                break;
+
+        } while (attempts < 10);
+
+        _lastSpawnPosition = candidate;
+        _hasLastSpawnPosition = true;
+
+        return candidate;
+    }
+    private void SpawnMarshmallow()
+    {
+        if (transform.childCount >= _maxActivePlatforms)
+            return;
+        
+        Vector3 spawnPosition = GetValidSpawnPosition();
+        Quaternion randomRotation = Quaternion.Euler(0f, Random.Range(0f, 360f), 0f);
+        Instantiate(_deadMarshmallowPrefab, spawnPosition, randomRotation, transform);    }
+    
+    
 
     public void SetSpawnInterval(float value)
     {

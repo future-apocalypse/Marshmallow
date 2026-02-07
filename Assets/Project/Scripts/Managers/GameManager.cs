@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 
  [SerializeField] private float baseSinkTime = 5f;
  [SerializeField] private float baseSpawnInterval = 3f;
+ [SerializeField] private int maxDifficultyTier = 5;
  private int _difficultyTier;
  
  private void Awake()
@@ -23,19 +24,20 @@ public class GameManager : MonoBehaviour
  public void RegisterJump()
  {
   jumpCount++;
-  
-  int newTier = jumpCount / 10;
-  if (newTier > _difficultyTier)
+
+  int calculatedTier = Mathf.Min(jumpCount / 10, maxDifficultyTier);
+
+  if (calculatedTier > _difficultyTier)
   {
-   _difficultyTier = newTier;
+   _difficultyTier = calculatedTier;
    ApplyDifficulty();
   }
  }
 
  private void ApplyDifficulty()
  {
-  float sinkTime = Mathf.Max(1f, baseSinkTime - _difficultyTier * 1f);
-  float spawnInterval = Mathf.Max(0.5f, baseSpawnInterval - _difficultyTier * 0.3f);
+  float sinkTime = Mathf.Clamp(baseSinkTime - _difficultyTier * 1f, 1f, baseSinkTime);
+  float spawnInterval = Mathf.Clamp(baseSpawnInterval - _difficultyTier * 0.3f, 0.5f, baseSpawnInterval);
   
   PlatformManager.Instance.SetSinkTime(sinkTime);
   Spawner.Instance.SetSpawnInterval(spawnInterval);

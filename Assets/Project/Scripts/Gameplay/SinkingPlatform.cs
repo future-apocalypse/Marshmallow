@@ -8,8 +8,9 @@ public class SinkingPlatform : MonoBehaviour
     [SerializeField] private float _maxSinkDepth = 0.4f;
 
     [SerializeField] private float _sinkDelay = 3f;
-    [SerializeField] private float _finalSinkSpeed = 1f;
-    [SerializeField] private float _destroyY = -10f;
+    [SerializeField] private float _defaultSinkDelay = 3;
+    [SerializeField] private float _finalSinkSpeed = 0.5f;
+    [SerializeField] private float _destroyY = -5f;
     
     
     private Rigidbody _rb;
@@ -84,6 +85,11 @@ public class SinkingPlatform : MonoBehaviour
         {
             _playerOnPlatform = true;
             _timerActive = true;
+            
+            _sinkDelay = PlatformManager.Instance != null
+                ? PlatformManager.Instance.GetSinkTime()
+                : _defaultSinkDelay;
+            
             GameManager.Instance.RegisterJump();
         }
     }
