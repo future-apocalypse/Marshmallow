@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,10 +12,17 @@ public class GameManager : MonoBehaviour
  [SerializeField] private float baseSpawnInterval = 3f;
  [SerializeField] private int maxDifficultyTier = 5;
  private int _difficultyTier;
+
+
  
  private void Awake()
  {
-  Instance = this;
+  if (Instance == null)
+      Instance = this;
+  else {
+      Destroy(gameObject);
+      
+  }
  }
 
  private void Update()
@@ -42,4 +50,15 @@ public class GameManager : MonoBehaviour
   PlatformManager.Instance.SetSinkTime(sinkTime);
   Spawner.Instance.SetSpawnInterval(spawnInterval);
  }
+
+ public void PlayerDied()
+ {
+  Invoke(nameof(ReloadScene), 0.7f);
+ }
+
+ private void ReloadScene()
+ {
+  SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+ }
+
 }
